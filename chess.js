@@ -297,6 +297,8 @@ const animateMove = (origin, destination, playerMove) => {
     piece.classList.add('moving');
 }
 
+/*code underneath this line is dedicated to chess logic ------------------------------------------------*/
+
 //chess piece values
 const values = {
     'pawn': 1,
@@ -861,7 +863,7 @@ class Board {
             let newBoard = copyBoard(this);
             newBoard.depth++;
             newBoard.move(move[0], move[1]);
-            
+
             //resolve move value
             let moveValue = newBoard.miniMax(nextColor, movingColor, alpha, beta);
             if (playerMoving && moveValue > optimal) {
