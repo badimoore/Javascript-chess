@@ -141,14 +141,14 @@
         }
 
         .movable {
-            box-shadow: 0px 0px 16px slategray inset;
-            background-color: rgb(181, 194, 207);
+            box-shadow: 0px 0px 16px violet inset;
+            background-color: rgb(161, 198, 235);
         }
 
         .movable:hover,
-        .selected,
-        .selected.dark {
+        .selected {
             background-color: skyblue;
+            box-shadow: none;
         }
 
         .move-target {
@@ -282,8 +282,8 @@
             }
 
             .trow div {
-                height: calc(10vw);
-                width: calc(10vw + 2px);
+                height: 10vw;
+                width: 10vw;
             }
 
             .board img {
