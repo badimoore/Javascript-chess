@@ -271,21 +271,22 @@ const animateMove = (origin, destination, playerMove) => {
     const piece = document.getElementById(getSquareID(origin)).firstChild;
     //calculate total number of pixels to move in x and y directions
     let size = document.getElementById('cell00').offsetWidth;
-    //console.log('size:'+ size);
     const deltaX = (destination.x - origin.x) * size;
     const deltaY = (destination.y - origin.y) * size;
-
+    //set css variables
     piece.style.setProperty('--deltaX', `${deltaX}px`);
     piece.style.setProperty('--deltaY', `${deltaY}px`);
+
+    //add event listener to continue code after move ends
     if (playerMove) {
         piece.addEventListener('animationend', movePiece2);
     } else {
         piece.addEventListener('animationend', movePiece3);
     }
+
     //castling
     //piece is king, and is moving over 1 space on x axis
     if (board.grid[origin.x][origin.y] instanceof King && destination.x - origin.x > 1) {
-        console.log('rook moving');
         const rookPiece = document.getElementById(getSquareID(new Coordinate(7, origin.y))).firstChild;
         const rookDeltaX = -2 * size;
         const rookDeltaY = 0;
@@ -296,7 +297,7 @@ const animateMove = (origin, destination, playerMove) => {
     piece.classList.add('moving');
 }
 
-
+//chess piece values
 const values = {
     'pawn': 1,
     'knight': 3,
@@ -360,6 +361,7 @@ const copyGrid = (grid) => {
     return newGrid;
 }
 
+//make copy of oldBoard
 const copyBoard = (oldBoard) => {
     const playWhite = oldBoard.playerColor === 'white';
     const newBoard = new Board(playWhite, copyGrid(oldBoard.grid));
@@ -367,6 +369,7 @@ const copyBoard = (oldBoard) => {
     return newBoard;
 }
 
+//represents one spot on the board
 class Coordinate {
     constructor(x, y) {
         this.x = Number.parseInt(x);
@@ -374,6 +377,7 @@ class Coordinate {
     }
 }
 
+//superclass for all chess piece subclasses
 class Piece {
     constructor(color) {
         this.color = color;
@@ -385,10 +389,12 @@ class Piece {
         return this.color === piece.color;
     }
 
+    //get all valid straight moves up to limit squares
     getStraightMoves(xy, grid, limit) {
         return this.getLinearMoves(xy, grid, [[1, 0], [-1, 0], [0, 1], [0, -1]], limit);
     }
 
+    //get all valid diagonal moves up to limit squares
     getDiagonalMoves(xy, grid, limit) {
         return this.getLinearMoves(xy, grid, [[1, 1], [1, -1], [-1, 1], [-1, -1]], limit);
     }
@@ -456,7 +462,6 @@ class Piece {
         return newPiece;
     }
 }
-
 
 class Pawn extends Piece {
     constructor(color) {
@@ -799,8 +804,8 @@ class Board {
         }
         allMoves = shuffledMoves;
 
-        let alpha = -100000;
-        let beta = 100000;
+        let alpha = -100000;  //the lowest acceptable score for the human player
+        let beta = 100000; //the highest acceptable score for the ai
         let optimalMove;
 
         //iterate through each potential move
@@ -808,6 +813,7 @@ class Board {
             let newBoard = copyBoard(this);
             newBoard.depth++;
             newBoard.move(move[0], move[1]);
+            //start up recursive algorithm to go down search tree for move
             let moveValue = newBoard.miniMax(this.playerColor, this.aiColor, alpha, beta);
             if (moveValue < beta) {
                 beta = moveValue;
@@ -819,8 +825,7 @@ class Board {
         this.lastDestination = optimalMove[1];
 
         //check if player has no available moves (ai won)
-        let opponentMoves = this.getAllMoves(this.playerColor);
-        if (opponentMoves.length === 0) {
+        if (this.getAllMoves(this.playerColor).length === 0) {
             this.endGame(this.aiColor);
             return;
         }
@@ -856,6 +861,7 @@ class Board {
             let newBoard = copyBoard(this);
             newBoard.depth++;
             newBoard.move(move[0], move[1]);
+            
             //resolve move value
             let moveValue = newBoard.miniMax(nextColor, movingColor, alpha, beta);
             if (playerMoving && moveValue > optimal) {
