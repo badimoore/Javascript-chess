@@ -18,6 +18,12 @@
             position: relative;
         }
 
+        h3 {
+            color: blue;
+            width: 100%;
+            text-align: center;
+        }
+
         .chessnav {
             background-color: darkslategray;
             float: left;
@@ -91,6 +97,8 @@
             background-color: white;
             border: 1px solid darkgray;
             box-shadow: 2px 2px 4px lightgray;
+            padding: 0.5em;
+            overflow: hidden;
             z-index: 30;
         }
 
@@ -99,6 +107,8 @@
         }
 
         .accredit {
+            position: absolute;
+            bottom: 0;
             font-style: italic;
         }
 
@@ -325,12 +335,16 @@
             </div>
 
             <div id="about" class="about">
-                <p class="copyright">Copyright <a href="https://github.com/badimoore" target="_blank">Badi Moore</a> 2021</p>
+                <h3>Shakki-Matti</h3>
+                <p class="copyright">Copyright <a href="https://github.com/badimoore" target="_blank">Badi Moore</a>
+                    2021</p>
                 <p>This is a student project made at <a href="https://www.riveria.fi/">Riveria</a>. The time it takes
                     the AI to make it's move is dependant on search depth, so higher difficulties can have a negative
                     impact on performance.</p>
-                <p class="accredit">Chess piece images by <a href="https://commons.wikimedia.org/wiki/User:Cburnett" target="_blank">Cburnett</a> under
-                    <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en" target="_blank">CC BY-SA 3.0</a>. No changes
+                <p class="accredit">Chess piece images by <a href="https://commons.wikimedia.org/wiki/User:Cburnett"
+                        target="_blank">Cburnett</a> under
+                    <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en" target="_blank">CC BY-SA 3.0</a>.
+                    No changes
                     were made.
                 </p>
             </div>
